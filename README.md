@@ -1,4 +1,4 @@
-# react-formik-wizard
+# 🧙 React Formik Wizard
 
 > A simple json based wizard component for creating wizards with React and Formik
 
