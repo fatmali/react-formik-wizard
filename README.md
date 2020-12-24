@@ -16,7 +16,6 @@ npm install --save react-formik-wizard
 import React, { Component } from 'react'
 
 import MyComponent from 'react-formik-wizard'
-import 'react-formik-wizard/dist/index.css'
 
 class Example extends Component {
   render() {
