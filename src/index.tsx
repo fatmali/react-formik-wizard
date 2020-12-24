@@ -1,10 +1,25 @@
-import * as React from 'react'
-import styles from './styles.module.css'
+import React from 'react'
+import { Client as Styletron } from 'styletron-engine-atomic'
+import { Provider as StyletronProvider } from 'styletron-react'
+import { LightTheme, BaseProvider } from 'baseui'
+import Wizard from './components/Wizard'
+// eslint-disable-next-line no-unused-vars
+import IWizard from './types/wizard.types'
 
-interface Props {
-  text: string
+interface LibProps {
+  wizard: IWizard
+  onComplete: (values: any) => any
 }
 
-export const ExampleComponent = ({ text }: Props) => {
-  return <div className={styles.test}>Example Component: {text}</div>
+const Lib = ({ wizard, onComplete }: LibProps) => {
+  const engine = new Styletron()
+  return (
+    <StyletronProvider value={engine}>
+      <BaseProvider theme={LightTheme}>
+        <Wizard wizard={wizard} onComplete={onComplete} />
+      </BaseProvider>
+    </StyletronProvider>
+  )
 }
+
+export default Lib
