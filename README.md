@@ -1,6 +1,6 @@
 # 🧙 React Formik Wizard
 
-> A simple opinionated library for creating wizards with React and Formik using JSON
+> A simple opinionated library for creating wizards with React using JSON
 
 [![NPM](https://img.shields.io/npm/v/react-formik-wizard.svg)](https://www.npmjs.com/package/react-formik-wizard) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
