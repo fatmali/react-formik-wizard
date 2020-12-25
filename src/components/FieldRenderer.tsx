@@ -18,11 +18,7 @@ const FieldRenderer = ({ step, field }: FieldRendererProps) => {
     switch (field.type) {
       case 'text':
         return (
-          <StatefulInput
-            {...field}
-            value='hello'
-            initialState={{ value: field.value }}
-          />
+          <StatefulInput {...field} initialState={{ value: field.value }} />
         )
       case 'number':
         return <StatefulInput type='number' {...field} />
