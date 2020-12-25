@@ -61,7 +61,7 @@
     "typescript": "^3.7.5"
   },
   "husky": {
-    "precommit": "pretty-quick --staged && npm run lint && npm run test:units"
+    "pre-commit": "pretty-quick --staged && npm run lint && npm run test:units"
   },
   "files": [
     "dist"
