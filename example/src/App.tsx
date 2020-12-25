@@ -20,19 +20,18 @@ const App = () => {
             fields: [
               {
                 label: 'First Name',
-                id: 'first_name',
-                type: 'text',
-                required: true
+                id: 'personal_info.first_name',
+                type: 'text'
               },
               {
                 label: 'Last Name',
-                id: 'last_name',
+                id: 'personal_info.last_name',
                 type: 'text',
                 required: true
               },
               {
                 label: 'Date of Birth',
-                id: 'dob',
+                id: 'personal_info.dob',
                 type: 'date',
                 required: true
               }
@@ -49,13 +48,13 @@ const App = () => {
             fields: [
               {
                 label: 'Name',
-                id: 'highschool_name',
+                id: 'education.highschool_name',
                 type: 'text',
                 required: true
               },
               {
                 label: 'GPA',
-                id: 'highschool_gpa',
+                id: 'education.highschool_gpa',
                 type: 'number',
                 required: true
               }
@@ -72,7 +71,7 @@ const App = () => {
             fields: [
               {
                 label: 'Do you have any current conditions?',
-                id: 'current_conditions_available',
+                id: 'education.current_conditions_available',
                 type: 'select',
                 options: [
                   { id: '1', label: 'Yes' },
@@ -82,7 +81,7 @@ const App = () => {
               },
               {
                 label: 'If yes, list all conditions you have',
-                id: 'all_conditions',
+                id: 'education.all_conditions',
                 type: 'combobox',
                 options: [
                   { id: '1', label: 'Diabetes' },
@@ -95,14 +94,33 @@ const App = () => {
         ]
       }
     ],
-    validations: {},
+    validation: [
+      ['yup.object'],
+      [
+        'yup.shape',
+        {
+          personal_info: [
+            ['yup.object'],
+            [
+              'yup.shape',
+              {
+                first_name: [
+                  ['yup.string'],
+                  ['yup.required', 'first name is required']
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    ]
   }
 
   const onComplete = (values: any) => {
     console.log(values)
   }
-  
-  return <Wizard wizard={wizard} onComplete={onComplete}/>
+
+  return <Wizard wizard={wizard} onComplete={onComplete} />
 }
 
 export default App

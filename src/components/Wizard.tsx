@@ -7,6 +7,7 @@ import { Grid, Cell } from 'baseui/layout-grid'
 import { Form, Formik } from 'formik'
 // eslint-disable-next-line no-unused-vars
 import Wizard from '../types/wizard.types'
+import { transformAll } from '@demvsystems/yup-ast'
 
 interface WizardProps {
   wizard: Wizard
@@ -15,7 +16,16 @@ interface WizardProps {
 export default function App(props: WizardProps) {
   const [currentStep, setCurrentStep] = React.useState(0)
   const [completedSteps] = React.useState({})
+  const [validations, setValidations] = React.useState()
   const { wizard } = props
+
+  React.useEffect(() => {
+    if (wizard.validation) {
+      const serializedValidations = transformAll(wizard.validation)
+      console.log(serializedValidations, 'serializedValidations')
+      setValidations(serializedValidations)
+    }
+  }, [wizard.validation])
   return (
     <div>
       <h1>{wizard.name}</h1>
@@ -32,6 +42,7 @@ export default function App(props: WizardProps) {
           }
         }}
         onSubmit={(values) => props.onComplete(values)}
+        validationSchema={validations}
       >
         <Form>
           <Steps currentStep={currentStep}>

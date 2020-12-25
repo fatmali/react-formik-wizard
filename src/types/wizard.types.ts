@@ -29,4 +29,5 @@ export default interface Wizard {
   name: string
   steps: Step[]
   settings: any
+  validation: any[]
 }
