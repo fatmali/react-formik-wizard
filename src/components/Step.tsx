@@ -1,9 +1,10 @@
 import React from 'react'
-import { Step } from '../types/wizard.types'
+// eslint-disable-next-line no-unused-vars
+import { Step as IStep } from '../types/wizard.types'
 import FieldRenderer from './FieldRenderer'
 
 interface StepProps {
-  step: Step
+  step: IStep
 }
 
 const Step = ({ step }: StepProps) => {

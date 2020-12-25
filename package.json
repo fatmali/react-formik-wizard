@@ -17,7 +17,7 @@
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
-    "test:lint": "eslint .",
+    "test:lint": "eslint ./src/*/**",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && yarn install && yarn run build",
@@ -61,7 +61,9 @@
     "typescript": "^3.7.5"
   },
   "husky": {
-    "pre-commit": "pretty-quick --staged && npm run lint && npm run test:units"
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && npm run test:lint && npm run test:unit"
+    }
   },
   "files": [
     "dist"
