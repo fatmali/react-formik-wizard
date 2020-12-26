@@ -1,5 +1,4 @@
 // eslint-disable-next-line no-unused-vars
-import { CSSProperties } from 'react'
 
 export interface Field {
   label: string
@@ -7,8 +6,7 @@ export interface Field {
   id: string
   calculated?: string
   value?: string
-  validations?: any[]
-  styles?: CSSProperties
+  placeholder?: string
   required?: boolean
   options?: { label: string; id: string }[]
 }
@@ -25,9 +23,9 @@ export interface Step {
   sections: Section[]
 }
 
-export default interface Wizard {
+export interface Wizard {
   name: string
   steps: Step[]
-  settings: any
-  validation: any[]
+  settings?: any
+  validation?: any[]
 }

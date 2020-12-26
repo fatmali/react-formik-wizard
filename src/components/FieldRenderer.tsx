@@ -21,7 +21,7 @@ const FieldRenderer = ({ field }: FieldRendererProps) => {
   const { setFieldValue, errors } = useFormikContext()
   const renderField = (field: any) => {
     switch (field.type) {
-      case 'text':
+      case 'text' || 'number':
         return (
           <StatefulInput
             {...field}
@@ -37,14 +37,6 @@ const FieldRenderer = ({ field }: FieldRendererProps) => {
             error={errors && errors[field.name]}
           />
         )
-      case 'number':
-        return (
-          <StatefulInput
-            type='number'
-            {...field}
-            error={errors && errors[field.name]}
-          />
-        )
       case 'combobox':
         return (
           <Combobox
@@ -52,6 +44,7 @@ const FieldRenderer = ({ field }: FieldRendererProps) => {
             mapOptionToString={(option) => option.label}
             onChange={(value) => setFieldValue(field.name, value)}
             value={field.value}
+            id={field.id}
           />
         )
       case 'date':
@@ -60,6 +53,7 @@ const FieldRenderer = ({ field }: FieldRendererProps) => {
             value={field.value}
             onChange={({ date }) => setFieldValue(field.name, date)}
             error={errors && errors[field.name]}
+            aria-role='date-picker'
           />
         )
       case 'select':
@@ -70,6 +64,7 @@ const FieldRenderer = ({ field }: FieldRendererProps) => {
             placeholder={field.placeholder}
             onChange={(value) => setFieldValue(field.name, value)}
             error={errors && errors[field.name]}
+            id={field.id}
           />
         )
       default:
@@ -77,7 +72,7 @@ const FieldRenderer = ({ field }: FieldRendererProps) => {
     }
   }
   return (
-    <FormControl label={() => field.label}>
+    <FormControl label={() => field.label} htmlFor={field.id}>
       <Field name={field.id}>
         {({ field: formikField }: any) => (
           <div>

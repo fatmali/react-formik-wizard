@@ -1,14 +1,11 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import React from 'react'
 import Wizard from '../components/Wizard'
+// eslint-disable-next-line no-unused-vars
+import { Wizard as WizardType } from '../types/wizard.types'
 
 const wizard = {
   name: 'JSON Wizard',
-  settings: {
-    disableNextUntilValid: true,
-    disableSubmitUntilValid: true,
-    useSections: true
-  },
   steps: [
     {
       name: 'Personal Info',
@@ -115,6 +112,107 @@ const wizard = {
   ]
 }
 
+const renderWizard = (schema: WizardType) =>
+  render(<Wizard wizard={schema} onComplete={() => null} />)
+
 it('renders without crashing', () => {
-  render(<Wizard wizard={wizard} onComplete={() => null} />)
+  renderWizard(wizard)
 })
+
+it('renders <input/> field as specified', () => {
+  const wizard: WizardType = {
+    name: 'JSON Wizard',
+    steps: [
+      {
+        name: 'Personal Info',
+        id: 'personal_info',
+        sections: [
+          {
+            name: 'Biodata',
+            fields: [
+              {
+                label: 'First Name',
+                id: 'personal_info.first_name',
+                type: 'text'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  renderWizard(wizard)
+  screen.getByText('First Name')
+  screen.getByLabelText('First Name')
+})
+
+it('renders <select/> fields as specified', () => {
+  const wizard: WizardType = {
+    name: 'JSON Wizard',
+    steps: [
+      {
+        name: 'Personal Info',
+        id: 'personal_info',
+        sections: [
+          {
+            name: 'Biodata',
+            fields: [
+              {
+                label: 'Gender',
+                id: 'personal_info.gender',
+                type: 'select',
+                options: [
+                  { label: 'Male', id: 'm' },
+                  { label: 'Female', id: 'f' }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  renderWizard(wizard)
+  screen.getByText('Gender')
+  screen.getByLabelText('Gender')
+})
+
+it('renders <combobox/> as specified', () => {})
+
+it('renders date field as specified', () => {
+  const wizard: WizardType = {
+    name: 'JSON Wizard',
+    steps: [
+      {
+        name: 'Personal Info',
+        id: 'personal_info',
+        sections: [
+          {
+            name: 'Biodata',
+            fields: [
+              {
+                label: 'DOB',
+                id: 'personal_info.dob',
+                type: 'date'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  renderWizard(wizard)
+  screen.getByText('DOB')
+})
+
+it('validates and displays errors when form schema is incorrect', () => {})
+
+it('next and previous buttons work correctly', () => {})
+
+it('stepper buttons work correctly', () => {})
+
+it('validations are parsed and work correctly', () => {})
+
+it('displays errors when the validations schema is incorrect', () => {})
+
+it('successfully calls onComplete function', () => {})

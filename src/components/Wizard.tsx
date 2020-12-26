@@ -6,11 +6,11 @@ import { Button, SHAPE } from 'baseui/button'
 import { Grid, Cell } from 'baseui/layout-grid'
 import { Form, Formik } from 'formik'
 // eslint-disable-next-line no-unused-vars
-import Wizard from '../types/wizard.types'
+import { Wizard as WizardType } from '../types/wizard.types'
 import { transformAll } from '@demvsystems/yup-ast'
 
 interface WizardProps {
-  wizard: Wizard
+  wizard: WizardType
   onComplete: (values: any) => any
 }
 export default function App(props: WizardProps) {
@@ -22,7 +22,6 @@ export default function App(props: WizardProps) {
   React.useEffect(() => {
     if (wizard.validation) {
       const serializedValidations = transformAll(wizard.validation)
-      console.log(serializedValidations, 'serializedValidations')
       setValidations(serializedValidations)
     }
   }, [wizard.validation])
