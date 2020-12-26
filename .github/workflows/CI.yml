@@ -15,9 +15,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
     - name: Setup Node
-      uses: actions/setup-node@v1.1.0
+      uses: actions/setup-node@v1.4.4
       with:
-        version: '10.x'
+        always-auth: true
+        node-version: '12.x'
     - name: Install dependencies
       run: npm install
     - name: Run tests
