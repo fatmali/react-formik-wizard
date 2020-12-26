@@ -18,7 +18,9 @@ jobs:
       uses: actions/setup-node@v1.4.4
       with:
         node-version: '12.x'
+    - name: Install yarn
+      run: npm install -g yarn
     - name: Install dependencies
-      run: npm ci
+      run: yarn install
     - name: Run tests
-      run: npm run test:unit
+      run: yarn run test:unit
