@@ -29,3 +29,9 @@ export interface Wizard {
   settings?: any
   validation?: any[]
 }
+
+export default {
+  Field,
+  Section,
+  Step,
+  Wizard
