@@ -35,3 +35,4 @@ export default {
   Section,
   Step,
   Wizard
+}
