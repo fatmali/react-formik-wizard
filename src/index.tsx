@@ -7,10 +7,17 @@ import './styles.module.css'
 interface LibProps {
   wizard: IWizard
   onComplete: (values: any) => any
+  customFields?: any
 }
 
-const Lib = ({ wizard, onComplete }: LibProps) => {
-  return <Wizard wizard={wizard} onComplete={onComplete} />
+const Lib = ({ wizard, onComplete, customFields = {} }: LibProps) => {
+  return (
+    <Wizard
+      wizard={wizard}
+      onComplete={onComplete}
+      customFields={customFields}
+    />
+  )
 }
 
 export default Lib

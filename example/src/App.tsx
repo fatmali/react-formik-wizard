@@ -1,6 +1,16 @@
 import React from 'react'
+import DayPickerInput from 'react-day-picker/DayPickerInput'
 import Wizard from 'react-formik-wizard'
 import 'react-formik-wizard/dist/index.css'
+import 'react-day-picker/lib/style.css'
+
+const CustomDateInput = ({ form, field }: any) => {
+  return (
+    <div>
+      <DayPickerInput onDayChange={(e) => form.setFieldValue(field.name, e)} />
+    </div>
+  )
+}
 
 const App = () => {
   const wizard = {
@@ -75,8 +85,8 @@ const App = () => {
                 id: 'current_conditions_available',
                 type: 'select',
                 options: [
-                  { id: '1', label: 'Yes' },
-                  { id: '2', label: 'No' }
+                  { value: '1', label: 'Yes' },
+                  { value: '2', label: 'No' }
                 ],
                 required: true
               },
@@ -85,8 +95,8 @@ const App = () => {
                 id: 'all_conditions',
                 type: 'combobox',
                 options: [
-                  { id: '1', label: 'Diabetes' },
-                  { id: '2', label: 'HBP' }
+                  { value: '1', label: 'Diabetes' },
+                  { value: '2', label: 'HBP' }
                 ],
                 required: true
               }
@@ -122,7 +132,17 @@ const App = () => {
     console.log(values)
   }
 
-  return <Wizard wizard={wizard} onComplete={onComplete} />
+  return (
+    <Wizard
+      wizard={wizard}
+      onComplete={onComplete}
+      customFields={{
+        date: {
+          component: CustomDateInput
+        }
+      }}
+    />
+  )
 }
 
 export default App

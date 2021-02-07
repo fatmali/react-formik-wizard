@@ -73,8 +73,8 @@ const App = () => {
                 id: 'all_conditions',
                 type: 'combobox',
                 options: [
-                  { id: '1', label: 'Diabetes' },
-                  { id: '2', label: 'HBP' }
+                  { value: '1', label: 'Diabetes' },
+                  { value: '2', label: 'HBP' }
                 ],
                 required: true
               }
@@ -94,6 +94,60 @@ const App = () => {
 }
 
 export default App
+```
+
+### Defining Custom Components
+
+It's possible to define custom components to render instead of the components rendered. For example: 
+
+```tsx
+const CustomDateInput = ({ form, field }: any) => {
+  return (
+    <div>
+      <DayPickerInput onDayChange={(e) => form.setFieldValue(field.name, e)} />
+    </div>
+  )
+}
+
+const App = () => {
+  const wizard = {
+    name: 'JSON Wizard',
+    settings: {
+      disableNextUntilValid: true,
+      disableSubmitUntilValid: true,
+      useSections: true
+    },
+    steps: [
+      {
+        name: 'Medical',
+        id: 'medical',
+        sections: [
+          {
+            name: 'Personal Information',
+            fields: [
+              {
+                label: 'Do you have any current conditions?',
+                id: 'current_conditions_available',
+                type: 'custom-date',
+              },
+            ]
+          }
+        ]
+      }
+    ],
+  }
+
+  return (
+    <Wizard
+      wizard={wizard}
+      onComplete={onComplete}
+      customFields={{
+        custom-date: {
+          component: CustomDateInput
+        }
+      }}
+    />
+  )
 ```
 
 ## License

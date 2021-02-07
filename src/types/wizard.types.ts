@@ -9,7 +9,7 @@ export interface IField {
   value?: string
   placeholder?: string
   required?: boolean
-  options?: { label: string; id: string }[]
+  options?: { label: string; value: string }[]
   initialValue?: Promise<string> | string
 }
 

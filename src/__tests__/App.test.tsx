@@ -70,8 +70,8 @@ const wizard = {
               id: 'education.current_conditions_available',
               type: 'select',
               options: [
-                { id: '1', label: 'Yes' },
-                { id: '2', label: 'No' }
+                { value: '1', label: 'Yes' },
+                { value: '2', label: 'No' }
               ],
               required: true
             },
@@ -80,8 +80,8 @@ const wizard = {
               id: 'education.all_conditions',
               type: 'combobox',
               options: [
-                { id: '1', label: 'Diabetes' },
-                { id: '2', label: 'HBP' }
+                { value: '1', label: 'Diabetes' },
+                { value: '2', label: 'HBP' }
               ],
               required: true
             }
@@ -162,8 +162,8 @@ it('renders <select/> fields as specified', () => {
                 id: 'personal_info.gender',
                 type: 'select',
                 options: [
-                  { label: 'Male', id: 'm' },
-                  { label: 'Female', id: 'f' }
+                  { label: 'Male', value: 'm' },
+                  { label: 'Female', value: 'f' }
                 ]
               }
             ]

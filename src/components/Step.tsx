@@ -5,9 +5,10 @@ import FieldRenderer from './FieldRenderer'
 
 interface StepProps {
   step: IStep
+  customFields: any
 }
 
-const Step = ({ step }: StepProps) => {
+const Step = ({ step, customFields }: StepProps) => {
   return (
     <div>
       {step.sections.map((section) => {
@@ -16,7 +17,12 @@ const Step = ({ step }: StepProps) => {
             <p className='panel-heading'>{section.name}</p>
             <div className='p-2'>
               {section.fields.map((field) => (
-                <FieldRenderer field={field} step={step} key={field.id} />
+                <FieldRenderer
+                  field={field}
+                  step={step}
+                  key={field.id}
+                  customFields={customFields}
+                />
               ))}
             </div>
           </div>
