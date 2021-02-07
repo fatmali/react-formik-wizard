@@ -1,20 +1,17 @@
 import React from 'react'
 import { Field, useFormikContext } from 'formik'
 // eslint-disable-next-line no-unused-vars
-import { IField, IStep } from '../types/wizard.types'
+import { IField, ISection, IStep } from '../types/wizard.types'
 
 interface FieldRendererProps {
   step: IStep
   field: IField
+  section: ISection
   customFields?: any
 }
 
-const FieldRenderer = ({
-  field: _field,
-  step,
-  customFields
-}: FieldRendererProps) => {
-  const { errors } = useFormikContext()
+const FieldRenderer = ({ field: _field, customFields }: FieldRendererProps) => {
+  const { errors, values } = useFormikContext()
 
   const renderField = (
     type: string,
@@ -36,22 +33,14 @@ const FieldRenderer = ({
           <input
             {...field}
             onChange={(e) => form.setFieldValue(field.name, e.target.value)}
-            className={
-              errors && errors[step.id] && errors[step.id][id]
-                ? 'input is-danger'
-                : 'input'
-            }
+            className={errors && errors[id] ? 'input is-danger' : 'input'}
           />
         )
       case 'textarea':
         return (
           <textarea
             {...field}
-            className={
-              errors && errors[step.id] && errors[step.id][id]
-                ? 'textarea is-danger'
-                : 'textarea'
-            }
+            className={errors && errors[id] ? 'textarea is-danger' : 'textarea'}
           />
         )
       case 'select':
@@ -59,16 +48,13 @@ const FieldRenderer = ({
           <select
             value={field.value}
             placeholder={field.placeholder}
-            onChange={(value) => form.setFieldValue(field.name, value)}
-            id={field.id}
-            className={
-              errors && errors[step.id] && errors[step.id][id]
-                ? 'select is-danger'
-                : 'select'
-            }
+            onChange={(e) => form.setFieldValue(field.name, e.target.value)}
+            className={errors && errors[id] ? 'select is-danger' : 'select'}
           >
-            {options.map((option: any) => (
-              <option key={option.label}>{option.label}</option>
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
             ))}
           </select>
         )
@@ -80,18 +66,64 @@ const FieldRenderer = ({
         )
     }
   }
+  const shouldRenderField = () => {
+    if (_field.show) {
+      const dependentFieldId = _field.show.when
+      if (dependentFieldId) {
+        const dependentFieldValue =
+          // @ts-ignore
+          values[dependentFieldId]
+
+        if (_field.show.is) {
+          return dependentFieldValue === _field.show.is
+        }
+        if (_field.show.gte && _field.show.lte) {
+          return (
+            dependentFieldValue >= _field.show.gte &&
+            dependentFieldValue <= _field.show.lte
+          )
+        }
+        if (_field.show.gt && _field.show.lt) {
+          return (
+            dependentFieldValue > _field.show.gt &&
+            dependentFieldValue < _field.show.lt
+          )
+        }
+        if (_field.show.gte) {
+          return dependentFieldValue >= _field.show.gte
+        }
+        if (_field.show.gt) {
+          return dependentFieldValue > _field.show.gt
+        }
+        if (_field.show.lt) {
+          return dependentFieldValue < _field.show.lt
+        }
+        if (_field.show.lte) {
+          return dependentFieldValue <= _field.show.lte
+        }
+        if (_field.show.contains) {
+          return dependentFieldValue.includes(_field.show.contains)
+        }
+      }
+      return false
+    }
+    return true
+  }
   return (
-    <Field name={`${step.id}.${_field.id}`}>
-      {({ field, form }: any) => (
-        <div className='field'>
-          <label className='label'>{_field.label}</label>
-          {renderField(_field.type, _field.id, _field.options, { field, form })}
-          <p className='help is-danger'>
-            {errors && errors[step.id] && errors[step.id][_field.id]}
-          </p>
-        </div>
-      )}
-    </Field>
+    shouldRenderField() && (
+      <Field name={_field.id}>
+        {({ field, form }: any) => (
+          <div className='field'>
+            <label className='label'>{_field.label}</label>
+            {renderField(_field.type, _field.id, _field.options, {
+              field,
+              form
+            })}
+            <p className='help is-danger'>{errors && errors[_field.id]}</p>
+          </div>
+        )}
+      </Field>
+    )
   )
 }
 

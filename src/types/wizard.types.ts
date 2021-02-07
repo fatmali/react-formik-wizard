@@ -11,11 +11,20 @@ export interface IField {
   required?: boolean
   options?: { label: string; value: string }[]
   initialValue?: Promise<string> | string
+  show: {
+    when: string
+    is?: string
+    contains?: string
+    gt?: string
+    lt?: string
+    gte?: string
+    lte?: string
+  }
 }
 
 export interface ISection {
   name: string
-  id?: string
+  id: string
   fields: IField[]
 }
 

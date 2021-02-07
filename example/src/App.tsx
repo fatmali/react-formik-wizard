@@ -7,7 +7,10 @@ import 'react-day-picker/lib/style.css'
 const CustomDateInput = ({ form, field }: any) => {
   return (
     <div>
-      <DayPickerInput onDayChange={(e) => form.setFieldValue(field.name, e)} />
+      <DayPickerInput
+        onDayChange={(e) => form.setFieldValue(field.name, e)}
+        value={field.value}
+      />
     </div>
   )
 }
@@ -27,6 +30,7 @@ const App = () => {
         sections: [
           {
             name: 'Biodata',
+            id: 'biodata',
             fields: [
               {
                 label: 'First Name',
@@ -44,6 +48,7 @@ const App = () => {
                 label: 'Date of Birth',
                 id: 'dob',
                 type: 'date',
+                initialValue: '2020-01-01',
                 required: true
               }
             ]
@@ -56,12 +61,32 @@ const App = () => {
         sections: [
           {
             name: 'High School',
+            id: 'education',
             fields: [
+              {
+                label: 'Highest level of education',
+                id: 'highest_education',
+                type: 'select',
+                options: [
+                  {
+                    label: 'University',
+                    value: 'university'
+                  },
+                  {
+                    label: 'High school',
+                    value: 'highschool'
+                  }
+                ]
+              },
               {
                 label: 'Name',
                 id: 'highschool_name',
                 type: 'text',
-                required: true
+                required: true,
+                show: {
+                  when: 'highest_education',
+                  is: 'highschool'
+                }
               },
               {
                 label: 'GPA',
@@ -79,26 +104,51 @@ const App = () => {
         sections: [
           {
             name: 'Current conditions',
+            id: 'current_conditions',
             fields: [
               {
                 label: 'Do you have any current conditions?',
                 id: 'current_conditions_available',
                 type: 'select',
                 options: [
-                  { value: '1', label: 'Yes' },
-                  { value: '2', label: 'No' }
+                  { value: 'yes', label: 'Yes' },
+                  { value: 'no', label: 'No' }
                 ],
                 required: true
               },
               {
                 label: 'If yes, list all conditions you have',
                 id: 'all_conditions',
-                type: 'combobox',
+                type: 'select',
                 options: [
                   { value: '1', label: 'Diabetes' },
                   { value: '2', label: 'HBP' }
                 ],
-                required: true
+                required: true,
+                show: {
+                  when: 'current_conditions_available',
+                  is: 'yes'
+                }
+              },
+              {
+                label: 'Glucose reading',
+                id: 'glucose',
+                type: 'number',
+                required: true,
+                show: {
+                  when: 'all_conditions',
+                  is: '1'
+                }
+              },
+              {
+                label: 'Blood pressure reading',
+                id: 'bp',
+                type: 'number',
+                required: true,
+                show: {
+                  when: 'glucose',
+                  gte: '7'
+                }
               }
             ]
           }
@@ -110,18 +160,10 @@ const App = () => {
       [
         'yup.shape',
         {
-          personal_info: [
-            ['yup.object'],
-            [
-              'yup.shape',
-              {
-                first_name: [
-                  ['yup.string'],
-                  ['yup.required', 'first name is required'],
-                  ['yup.max', '5', 'only 5 chars allowed']
-                ]
-              }
-            ]
+          first_name: [
+            ['yup.string'],
+            ['yup.required', 'first name is required'],
+            ['yup.max', '5', 'only 5 chars allowed']
           ]
         }
       ]

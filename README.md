@@ -150,6 +150,68 @@ const App = () => {
   )
 ```
 
+## Conditional Rendering
+
+It's useful in dynamic forms to render fields depending on the values of other fields. In order to render forms conditionally, you can define it like this in the schema: 
+
+```tsx
+  const wizard = {
+    name: 'JSON Wizard',
+    settings: {
+      disableNextUntilValid: true,
+      disableSubmitUntilValid: true,
+      useSections: true
+    },
+    steps: [
+      {
+        name: 'Medical',
+        id: 'medical',
+        sections: [
+          {
+            name: 'Personal Information',
+            fields: [
+              fields: [
+              {
+                label: 'Do you have any current conditions?',
+                id: 'current_conditions',
+                type: 'select',
+                options: [
+                  { value: 'yes', label: 'Yes' },
+                  { value: 'no', label: 'No' }
+                ],
+                required: true
+              },
+              {
+                label: 'If yes, list all conditions you have',
+                id: 'all_conditions',
+                type: 'select',
+                options: [
+                  { value: '1', label: 'Diabetes' },
+                  { value: '2', label: 'HBP' }
+                ],
+                required: true,
+                show: {
+                  when: 'current_conditions',
+                  is: 'yes'
+                }
+              },
+            ]
+          }
+        ]
+      }
+    ],
+  }
+```
+Conditional rendering is determined by the `show` property. The `show` property is an object that 
+1. Expects a `when` which is the id of the field whose value is depended upon. 
+2. It also expect any of the following params: 
+      - `is`: which checks if the field ===  `when` , 
+      - `gt`: checks if `when` > `is`, 
+      - `gte`: checks if `when` >= `is`, 
+      - `lt`: checks if `when` <= `lt`, 
+      - `lte`: checks if `when` <= `lte`, 
+      - `contains`: checks if `when` contains `contains`
+
 ## License
 
 MIT © [fatmali](https://github.com/fatmali)

@@ -29,9 +29,8 @@ export default function App(props: WizardProps) {
     const initialValues = {}
     wizard.steps.forEach((step) => {
       return step.sections.forEach((section) => {
-        initialValues[step.id] = {}
         section.fields.forEach((field) => {
-          initialValues[step.id][field.id] = field.initialValue || ''
+          initialValues[field.id] = field.initialValue || ''
         })
       })
     })

@@ -20,6 +20,7 @@ const Step = ({ step, customFields }: StepProps) => {
                 <FieldRenderer
                   field={field}
                   step={step}
+                  section={section}
                   key={field.id}
                   customFields={customFields}
                 />
