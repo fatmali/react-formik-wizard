@@ -1,38 +1,35 @@
 // eslint-disable-next-line no-unused-vars
 
-export interface Field {
+export interface IField {
   label: string
   type: string
   id: string
   calculated?: string
+  calculatedFormula?: string
   value?: string
   placeholder?: string
   required?: boolean
   options?: { label: string; id: string }[]
+  initialValue?: Promise<string> | string
 }
 
-export interface Section {
+export interface ISection {
   name: string
   id?: string
-  fields: Field[]
+  fields: IField[]
 }
 
-export interface Step {
+export interface IStep {
   name: string
   id: string
-  sections: Section[]
+  sections: ISection[]
 }
 
-export interface Wizard {
+export interface IWizard {
   name: string
-  steps: Step[]
+  steps: IStep[]
   settings?: any
   validation?: any[]
 }
 
-export default {
-  Field,
-  Section,
-  Step,
-  Wizard
-}
+export default IWizard

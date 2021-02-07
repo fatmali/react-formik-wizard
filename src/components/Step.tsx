@@ -1,6 +1,6 @@
 import React from 'react'
 // eslint-disable-next-line no-unused-vars
-import { Step as IStep } from '../types/wizard.types'
+import { IStep } from '../types/wizard.types'
 import FieldRenderer from './FieldRenderer'
 
 interface StepProps {
@@ -10,19 +10,18 @@ interface StepProps {
 const Step = ({ step }: StepProps) => {
   return (
     <div>
-      <h2>{step.name}</h2>
-      <div>
-        {step.sections.map((section) => {
-          return (
-            <div key={step.id}>
-              <h3>{section.name}</h3>
+      {step.sections.map((section) => {
+        return (
+          <div key={step.id} className='panel'>
+            <p className='panel-heading'>{section.name}</p>
+            <div className='p-2'>
               {section.fields.map((field) => (
                 <FieldRenderer field={field} step={step} key={field.id} />
               ))}
             </div>
-          )
-        })}
-      </div>
+          </div>
+        )
+      })}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 {
   "name": "react-formik-wizard",
   "version": "1.0.0",
-  "description": "A simple json based wizard component for creating wizards with React, Formik and Base Web UI",
+  "description": "A simple json based wizard component for creating wizards with React and Formik",
   "author": "fatmali",
   "license": "MIT",
   "repository": "fatmali/react-formik-wizard",
@@ -39,6 +39,7 @@
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "babel-eslint": "^10.0.3",
+    "bulma": "^0.9.2",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.7.0",
@@ -70,11 +71,8 @@
   ],
   "dependencies": {
     "@demvsystems/yup-ast": "^1.2.0",
-    "baseui": "^9.106.3",
     "formik": "^2.2.6",
     "husky": "^4.3.6",
-    "styletron-engine-atomic": "^1.4.6",
-    "styletron-react": "^5.2.7",
     "ts-jest": "^26.4.4"
   }
 }

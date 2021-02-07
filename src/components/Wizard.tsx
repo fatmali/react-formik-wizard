@@ -2,11 +2,9 @@ import React from 'react'
 import Stepper from './Stepper'
 import Steps from './Steps'
 import Step from './Step'
-import { Button, SHAPE } from 'baseui/button'
-import { Grid, Cell } from 'baseui/layout-grid'
 import { Form, Formik } from 'formik'
 // eslint-disable-next-line no-unused-vars
-import { Wizard as WizardType } from '../types/wizard.types'
+import { IWizard as WizardType } from '../types/wizard.types'
 import { transformAll } from '@demvsystems/yup-ast'
 
 interface WizardProps {
@@ -25,9 +23,21 @@ export default function App(props: WizardProps) {
       setValidations(serializedValidations)
     }
   }, [wizard.validation])
+
+  const getInitialValues = () => {
+    const initialValues = {}
+    wizard.steps.forEach((step) => {
+      return step.sections.forEach((section) => {
+        initialValues[step.id] = {}
+        section.fields.forEach((field) => {
+          initialValues[step.id][field.id] = field.initialValue || ''
+        })
+      })
+    })
+    return initialValues
+  }
   return (
     <div>
-      <h1>{wizard.name}</h1>
       <Stepper
         currentStep={currentStep}
         steps={wizard.steps}
@@ -35,11 +45,7 @@ export default function App(props: WizardProps) {
         setCurrentStep={setCurrentStep}
       />
       <Formik
-        initialValues={{
-          personal_info: {
-            first_name: 'hello'
-          }
-        }}
+        initialValues={getInitialValues()}
         onSubmit={(values) => props.onComplete(values)}
         validationSchema={validations}
       >
@@ -49,40 +55,32 @@ export default function App(props: WizardProps) {
               <Step step={step} key={i} />
             ))}
           </Steps>
-          <Grid>
-            <Cell span={[3, 3, 3]}>
-              {currentStep !== 0 && (
-                <Button
-                  onClick={() =>
-                    setCurrentStep(currentStep === 0 ? 0 : currentStep - 1)
-                  }
-                  shape={SHAPE.pill}
-                >
-                  Previous
-                </Button>
-              )}
-            </Cell>
-            <Cell span={[1, 4, 3]}>
-              {currentStep === wizard.steps.length - 1 ? (
-                <Button shape={SHAPE.pill} type='submit'>
-                  Save
-                </Button>
-              ) : (
-                <Button
-                  shape={SHAPE.pill}
-                  onClick={() =>
-                    setCurrentStep(
-                      currentStep === wizard.steps.length - 1
-                        ? 0
-                        : currentStep + 1
-                    )
-                  }
-                >
-                  Next
-                </Button>
-              )}
-            </Cell>
-          </Grid>
+          {currentStep !== 0 && (
+            <button
+              onClick={() =>
+                setCurrentStep(currentStep === 0 ? 0 : currentStep - 1)
+              }
+              className='button'
+            >
+              Previous
+            </button>
+          )}
+          {currentStep === wizard.steps.length - 1 ? (
+            <button type='submit' className='button'>
+              Save
+            </button>
+          ) : (
+            <button
+              className='button'
+              onClick={() =>
+                setCurrentStep(
+                  currentStep === wizard.steps.length - 1 ? 0 : currentStep + 1
+                )
+              }
+            >
+              Next
+            </button>
+          )}
         </Form>
       </Formik>
     </div>

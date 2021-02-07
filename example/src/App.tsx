@@ -20,18 +20,19 @@ const App = () => {
             fields: [
               {
                 label: 'First Name',
-                id: 'personal_info.first_name',
-                type: 'text'
+                id: 'first_name',
+                type: 'text',
+                initialValue: 'Zeinab'
               },
               {
                 label: 'Last Name',
-                id: 'personal_info.last_name',
+                id: 'last_name',
                 type: 'text',
                 required: true
               },
               {
                 label: 'Date of Birth',
-                id: 'personal_info.dob',
+                id: 'dob',
                 type: 'date',
                 required: true
               }
@@ -48,13 +49,13 @@ const App = () => {
             fields: [
               {
                 label: 'Name',
-                id: 'education.highschool_name',
+                id: 'highschool_name',
                 type: 'text',
                 required: true
               },
               {
                 label: 'GPA',
-                id: 'education.highschool_gpa',
+                id: 'highschool_gpa',
                 type: 'number',
                 required: true
               }
@@ -71,7 +72,7 @@ const App = () => {
             fields: [
               {
                 label: 'Do you have any current conditions?',
-                id: 'education.current_conditions_available',
+                id: 'current_conditions_available',
                 type: 'select',
                 options: [
                   { id: '1', label: 'Yes' },
@@ -81,7 +82,7 @@ const App = () => {
               },
               {
                 label: 'If yes, list all conditions you have',
-                id: 'education.all_conditions',
+                id: 'all_conditions',
                 type: 'combobox',
                 options: [
                   { id: '1', label: 'Diabetes' },
@@ -106,7 +107,8 @@ const App = () => {
               {
                 first_name: [
                   ['yup.string'],
-                  ['yup.required', 'first name is required']
+                  ['yup.required', 'first name is required'],
+                  ['yup.max', '5', 'only 5 chars allowed']
                 ]
               }
             ]

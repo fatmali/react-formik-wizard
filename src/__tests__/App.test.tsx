@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import Wizard from '../components/Wizard'
 // eslint-disable-next-line no-unused-vars
-import { Wizard as WizardType } from '../types/wizard.types'
+import { IWizard } from '../types/wizard.types'
 
 const wizard = {
   name: 'JSON Wizard',
@@ -112,7 +112,7 @@ const wizard = {
   ]
 }
 
-const renderWizard = (schema: WizardType) =>
+const renderWizard = (schema: IWizard) =>
   render(<Wizard wizard={schema} onComplete={() => null} />)
 
 it('renders without crashing', () => {
@@ -120,7 +120,7 @@ it('renders without crashing', () => {
 })
 
 it('renders <input/> field as specified', () => {
-  const wizard: WizardType = {
+  const wizard: IWizard = {
     name: 'JSON Wizard',
     steps: [
       {
@@ -147,7 +147,7 @@ it('renders <input/> field as specified', () => {
 })
 
 it('renders <select/> fields as specified', () => {
-  const wizard: WizardType = {
+  const wizard: IWizard = {
     name: 'JSON Wizard',
     steps: [
       {
@@ -174,13 +174,18 @@ it('renders <select/> fields as specified', () => {
   }
   renderWizard(wizard)
   screen.getByText('Gender')
-  screen.getByLabelText('Gender')
+  const select = screen.getByLabelText('Gender')
+  fireEvent.change(select, {
+    target: {
+      value: 'm'
+    }
+  })
 })
 
 it('renders <combobox/> as specified', () => {})
 
 it('renders date field as specified', () => {
-  const wizard: WizardType = {
+  const wizard: IWizard = {
     name: 'JSON Wizard',
     steps: [
       {
@@ -207,9 +212,155 @@ it('renders date field as specified', () => {
 
 it('validates and displays errors when form schema is incorrect', () => {})
 
-it('next and previous buttons work correctly', () => {})
+it('next and previous buttons work correctly', () => {
+  const wizard: IWizard = {
+    name: 'JSON Wizard',
+    steps: [
+      {
+        name: 'Personal Info',
+        id: 'personal_info',
+        sections: [
+          {
+            name: 'Biodata',
+            fields: [
+              {
+                label: 'DOB',
+                id: 'personal_info.dob',
+                type: 'date'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: 'Educational Info',
+        id: 'educational_info',
+        sections: [
+          {
+            name: 'Education History',
+            fields: [
+              {
+                label: 'University',
+                id: 'educational_history.university',
+                type: 'text'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: 'Family Info',
+        id: 'family_info',
+        sections: [
+          {
+            name: 'Family History',
+            fields: [
+              {
+                label: 'Surname',
+                id: 'family_history.surname',
+                type: 'text'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  renderWizard(wizard)
+  const nextButton = screen.queryByText(/next/i)
+  const prevButton = screen.queryByText(/previous/i)
+  expect(nextButton).not.toBeNull()
+  expect(prevButton).toBeNull()
+  expect(screen.queryByText(/educational info/i)).toBeNull()
+  expect(screen.queryByText(/personal info/i)).not.toBeNull()
+  nextButton && fireEvent.click(nextButton)
+  expect(screen.queryByText(/next/i)).not.toBeNull()
+  expect(screen.queryByText(/previous/i)).not.toBeNull()
+  expect(screen.queryByText(/educational info/i)).not.toBeNull()
+  expect(screen.queryByText(/personal info/i)).toBeNull()
+  nextButton && fireEvent.click(nextButton)
+  expect(screen.queryByText(/next/i)).toBeNull()
+  expect(screen.queryByText(/previous/i)).not.toBeNull()
+  expect(screen.queryByText(/save/i)).not.toBeNull()
+  expect(screen.queryByText(/family history/i)).not.toBeNull()
+  expect(screen.queryByText(/educational info/i)).toBeNull()
+})
 
-it('stepper buttons work correctly', () => {})
+it('stepper buttons work correctly', () => {
+  const wizard: IWizard = {
+    name: 'JSON Wizard',
+    steps: [
+      {
+        name: 'Personal Info',
+        id: 'personal_info',
+        sections: [
+          {
+            name: 'Biodata',
+            fields: [
+              {
+                label: 'DOB',
+                id: 'personal_info.dob',
+                type: 'date'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: 'Educational Info',
+        id: 'educational_info',
+        sections: [
+          {
+            name: 'Education History',
+            fields: [
+              {
+                label: 'University',
+                id: 'educational_history.university',
+                type: 'text'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: 'Family Info',
+        id: 'family_info',
+        sections: [
+          {
+            name: 'Family History',
+            fields: [
+              {
+                label: 'Surname',
+                id: 'family_history.surname',
+                type: 'text'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  renderWizard(wizard)
+  const stepperButton1 = screen.queryByText('1')
+  const stepperButton2 = screen.queryByText('2')
+  const stepperButton3 = screen.queryByText('3')
+  expect(stepperButton1).not.toBeNull()
+  expect(stepperButton2).not.toBeNull()
+  expect(stepperButton3).not.toBeNull()
+  expect(screen.queryByText(/educational info/i)).toBeNull()
+  expect(screen.queryByText(/personal info/i)).not.toBeNull()
+  stepperButton2 && fireEvent.click(stepperButton2)
+  expect(screen.queryByText(/next/i)).not.toBeNull()
+  expect(screen.queryByText(/previous/i)).not.toBeNull()
+  expect(screen.queryByText(/educational info/i)).not.toBeNull()
+  expect(screen.queryByText(/personal info/i)).toBeNull()
+  stepperButton3 && fireEvent.click(stepperButton3)
+  expect(screen.queryByText(/next/i)).toBeNull()
+  expect(screen.queryByText(/previous/i)).not.toBeNull()
+  expect(screen.queryByText(/save/i)).not.toBeNull()
+  expect(screen.queryByText(/family history/i)).not.toBeNull()
+  expect(screen.queryByText(/educational info/i)).toBeNull()
+})
 
 it('validations are parsed and work correctly', () => {})
 
