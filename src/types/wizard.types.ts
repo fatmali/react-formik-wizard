@@ -11,7 +11,7 @@ export interface IField {
   required?: boolean
   options?: { label: string; value: string }[]
   initialValue?: Promise<string> | string
-  show: {
+  show?: {
     when: string
     is?: string
     contains?: string
@@ -24,13 +24,13 @@ export interface IField {
 
 export interface ISection {
   name: string
-  id: string
+  id?: string
   fields: IField[]
 }
 
 export interface IStep {
   name: string
-  id: string
+  id?: string
   sections: ISection[]
 }
 

@@ -19,9 +19,8 @@ const FieldRenderer = ({ field: _field, customFields }: FieldRendererProps) => {
     options: { label: string; value: string }[] = [],
     { field, form }: any
   ) => {
-    const customField = customFields[type]
-
-    if (customField) {
+    if (customFields && customFields[type]) {
+      const customField = customFields[type]
       return <customField.component field={field} form={form} />
     }
 
@@ -34,12 +33,14 @@ const FieldRenderer = ({ field: _field, customFields }: FieldRendererProps) => {
             {...field}
             onChange={(e) => form.setFieldValue(field.name, e.target.value)}
             className={errors && errors[id] ? 'input is-danger' : 'input'}
+            id={id}
           />
         )
       case 'textarea':
         return (
           <textarea
             {...field}
+            id={id}
             className={errors && errors[id] ? 'textarea is-danger' : 'textarea'}
           />
         )
@@ -50,6 +51,7 @@ const FieldRenderer = ({ field: _field, customFields }: FieldRendererProps) => {
             placeholder={field.placeholder}
             onChange={(e) => form.setFieldValue(field.name, e.target.value)}
             className={errors && errors[id] ? 'select is-danger' : 'select'}
+            id={id}
           >
             {options.map((option) => (
               <option key={option.value} value={option.value}>
@@ -114,7 +116,9 @@ const FieldRenderer = ({ field: _field, customFields }: FieldRendererProps) => {
       <Field name={_field.id}>
         {({ field, form }: any) => (
           <div className='field'>
-            <label className='label'>{_field.label}</label>
+            <label className='label' htmlFor={_field.id}>
+              {_field.label}
+            </label>
             {renderField(_field.type, _field.id, _field.options, {
               field,
               form
