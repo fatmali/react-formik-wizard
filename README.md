@@ -1,4 +1,4 @@
-# 🧙 React Formik Wizard
+# React Formik Wizard
 
 > A simple opinionated library for creating wizards with React using JSON
 
