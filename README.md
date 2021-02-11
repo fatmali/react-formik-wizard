@@ -9,7 +9,7 @@
 Building forms is hectic. Building wizards, even more so! I built this library to enable me to create quick wizards and forms using plain json for my own use. Having a form defined in a structure like JSON has a lot of advantages, to name a few:
 
 1. Lose coupling between your React components and your forms, you can have your forms stored as json anywhere in your architecture and deployed independently of your frontend code 🚀 
-2. Easy to build tools that would help in form creation/maintennace by non-technical team members, saves your engineers time ⏰ 
+2. Easy to build tools that would help in form creation and maintenace by non-technical team members, saves your engineers time ⏰ 
 
 ## Install
 
