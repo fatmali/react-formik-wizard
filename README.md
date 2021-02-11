@@ -8,8 +8,8 @@
 
 Building forms is hectic. Building wizards, even more so! I built this library to enable me to create quick wizards and forms using plain json for my own use. Having a form defined in a structure like JSON has a lot of advantages, to name a few:
 
-1. Lose coupling between your React components and your forms, you can have your forms stored as json anywhere in your architecture and deployed independently of your frontend code
-2. Easy to build and deploy tools that would help in form creation
+1. Lose coupling between your React components and your forms, you can have your forms stored as json anywhere in your architecture and deployed independently of your frontend code 🚀 
+2. Easy to build tools that would help in form creation/maintennace by non-technical team members, saves your engineers time ⏰ 
 
 ## Install
 
@@ -24,8 +24,10 @@ import React from 'react'
 import Wizard from 'react-formik-wizard'
 
 const App = () => {
-  const wizard = {
-    name: 'JSON Wizard',
+
+  // JSON representing form, this can be stored in your code or in your server and fetched at runtime.
+  const form = {
+    name: 'My Wizard',
     settings: {
       disableNextUntilValid: true,
       disableSubmitUntilValid: true,
@@ -98,7 +100,7 @@ export default App
 
 ### Defining Custom Components
 
-It's possible to define custom components to render instead of the components rendered. For example: 
+It's possible to define custom UI to render fields instead of the default components rendered. For example: 
 
 ```tsx
 const CustomDateInput = ({ form, field }: any) => {
@@ -152,7 +154,7 @@ const App = () => {
 
 ## Conditional Rendering
 
-It's useful in dynamic forms to render fields depending on the values of other fields. In order to render forms conditionally, you can define it like this in the schema: 
+It's useful in dynamic forms/wizards to render fields depending on the values of other fields. In order to render fields conditionally, you can define it like this in the schema: 
 
 ```tsx
   const wizard = {
