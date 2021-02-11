@@ -1,12 +1,12 @@
 # React Formik Wizard
 
-> A simple opinionated library for creating wizards with React using JSON
+> A simple opinionated library for creating dynamic forms (aka wizards) with React using JSON
 
 [![NPM](https://img.shields.io/npm/v/react-formik-wizard.svg)](https://www.npmjs.com/package/react-formik-wizard) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Intro
 
-Building forms is hectic. Building wizards, even more so! I built this library to enable me to create quick wizards and forms using plain json for my own use. Having a form defined in a structure like JSON has a lot of advantages, to name a few:
+Building forms is hectic. Building wizards, even more so! I built this library to enable me to create quick wizards and forms using plain json. Having a form defined in a structure like JSON has a lot of advantages, to name a few:
 
 1. Lose coupling between your React components and your forms, you can have your forms stored as json anywhere in your architecture and deployed independently of your frontend code 🚀 
 2. Easy to build tools that would help in form creation and maintenace by non-technical team members, saves your engineers time ⏰ 
